@@ -1,0 +1,27 @@
+# steps to run
+
+1 - package your script ("mvn clean package -DskipTests") (make sure your dependence and script under libs folder)
+2 = go to target directory and then to directory you specified in pom file
+3 - run "java -cp 'libs/*' org.testng.TestNG test-suits/vendor-portal.xml"
+= to override the thread count "java -cp 'libs/*' org.testng.TestNG -threadcount 2 test-suits/vendor-portal.xml"
+= to override system varable (ex. browser) " java -Dbrowser=firefox -cp 'libs/*' org.testng.TestNG -threadcount 4 test-suits/vendor-portal.xml"
+
+
+java image alternative if the current has an issue "eclipse-temurin"
+
+## running without env variables
+
+when we need to run the script container we need to provide the ip address of that machine (ex 10.230.235.120)
+to talks with grid container
+docker run -it -v ${PWD}/result:/home/selenium-docker/test-output abdelnaby/selenium-test
+then
+java -Dselenium.grid.enabled=true -Dselenium.gird.hubHost=10.230.235.120 -cp 'libs/*' org.testng.TestNG -threadcount 3 test-suits/vendor-portal.xml
+
+
+
+## running with env variables
+
+docker run -v ${PWD}/result:/home/selenium-docker/test-output -e BROWSER=chrome -e HUB_HOST=10.230.235.120 -e TEST_SUITE=flight-reservation.xml -e THREAD_COUNT=4 abdelnaby/selenium-test
+
+
+at this moment we need to run the docker-compose file first then we need to run build and run the script container
