@@ -1,0 +1,9 @@
+first start the grid for one of the browser
+
+docker-compose -f grid.yaml up --scale chrome=2 -d
+
+then for windows
+
+$env:BROWSER = "firefox"; docker-compose up  (from powershell)
+or
+set BROWSER=chrome && docker-compose up  (from cmd)
