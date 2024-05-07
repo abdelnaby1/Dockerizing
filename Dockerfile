@@ -1,10 +1,13 @@
-FROM bellsoft/liberica-openjdk-alpine:17.0.8
+FROM abdelnaby1/alpine-jdk17-curl-jq:latest
+
+#FROM bellsoft/liberica-openjdk-alpine:17.0.8
+
+#RUN apk add curl jq
 
 WORKDIR /home/selenium-docker
 
 Add target/docker-resources ./
 
-ENTRYPOINT java -Dselenium.grid.enabled=true \
-        -Dselenium.gird.hubHost=${HUB_HOST} \
-        -Dbrowser=${BROWSER} \
-        -cp 'libs/*' org.testng.TestNG -threadcount ${THREAD_COUNT} test-suites/${TEST_SUITE}
+ADD runner.sh runner.sh
+
+ENTRYPOINT sh runner.sh

@@ -24,4 +24,5 @@ java -Dselenium.grid.enabled=true -Dselenium.gird.hubHost=10.230.235.120 -cp 'li
 docker run -v ${PWD}/result:/home/selenium-docker/test-output -e BROWSER=chrome -e HUB_HOST=10.230.235.120 -e TEST_SUITE=flight-reservation.xml -e THREAD_COUNT=4 abdelnaby/selenium-test
 
 
-at this moment we need to run the docker-compose file first then we need to run build and run the script container
+at this moment we need to run the docker-compose file first then we need to  build and run the script container
+as our script container is not a service inside the docker-compose file that contains the hub and browsers services

@@ -1,0 +1,22 @@
+we combine the docker-compose file that contains the hub and browsers services with our script container/service
+
+right now if we combine all together in docker-compose file and run docker-compose up, it will not run the test if
+the docker file with this content FROM bellsoft/liberica-openjdk-alpine:17.0.8
+
+                                  WORKDIR /home/selenium-docker
+
+                                  Add target/docker-resources ./
+
+                                  ENTRYPOINT java -Dselenium.grid.enabled=true \
+                                          -Dselenium.gird.hubHost=${HUB_HOST} \
+                                          -Dbrowser=${BROWSER} \
+                                          -cp 'libs/*' org.testng.TestNG -threadcount ${THREAD_COUNT} test-suites/${TEST_SUITE}
+
+why?
+as the hub status is still not ready as the browsers nodes still register themself even if the script
+service depends on hub, so we need to run the test only when the hub has status of ready
+
+to check the status of the hub cURL GET 'http://localhost:4444/status'
+
+so we need to change our dokcerfile to wait of running the test until the hub is ready
+we need to use curl and jq to check the status and extract it from the response using jq
