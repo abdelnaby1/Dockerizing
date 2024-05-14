@@ -1,0 +1,29 @@
+pipeline{
+    agent {
+        label "java"
+    }
+
+    stages{
+        stage("stage-1"){
+            steps{
+                echo "Doing mvn clean"
+                echo "Doing mvn package"
+            }
+        }
+         stage("stage-2"){
+             steps{
+                 echo "Building docker image"
+             }
+         }
+         stage("stage-3"){
+            steps{
+                echo "Pushing docker image"
+            }
+         }
+    }
+    post{
+        always{
+            echo "Doing clean up"
+        }
+    }
+}
