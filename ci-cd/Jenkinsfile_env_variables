@@ -1,0 +1,36 @@
+pipeline{
+    agent any
+    //will be access to all stages
+    environment{
+        NUMBER=3
+    }
+    stages{
+        stage("stage-1"){
+            steps{
+                echo "Doing mvn clean"
+                echo "Number = ${NUMBER}" //3
+            }
+        }
+         stage("stage-2"){
+            environment{
+                 NUMBER=6
+             }
+             steps{
+                 echo "Building docker image"
+                 echo "Number = ${NUMBER}" //6
+             }
+         }
+         stage("stage-3"){
+            steps{
+                echo "Pushing docker image"
+                echo "Number = ${NUMBER}" //3
+
+            }
+         }
+    }
+    post{
+        always{
+            echo "Doing clean up"
+        }
+    }
+}
